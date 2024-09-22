@@ -2,7 +2,7 @@
 #include<string>
 #include<fstream>
 using namespace std;
-void menu(){
+void menu(){        //菜单显示 
 		cout<<"================================="<<endl;
         cout<<"    欢迎使用个人账单管理系统     "<<endl;
         cout<<"================================="<<endl;
@@ -17,11 +17,11 @@ int main(){
 	while(1){
 	menu();
 	int choice;
-	double revenue;
-	double consume;
-	string date;
-	string category;
-	string remark;
+	double revenue; //收入 
+	double consume; //支出 
+	string date;    //日期 
+	string category;  //类别 
+	string remark;  //备注 
 	cin>>choice;
 	switch(choice){
 		case 1 : 
