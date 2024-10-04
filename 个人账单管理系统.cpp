@@ -9,17 +9,24 @@ void menu(){
         cout<<"请选择操作："<<endl;
         cout<<"1. 记录收入"<<endl;
         cout<<"2. 记录支出"<<endl;
+        cout<<"3. 查看所有账单"<<endl;
+        cout<<"4. 查询账单"<<endl;
         cout<<"7. 退出系统"<<endl;
         cout<<"请输入选择序号："; 
 	}
 int main(){
 	ofstream ofs;
+	ifstream ifs;
 	while(1){
 	menu();
 	int choice;
 	double revenue;
 	double consume;
 	string date;
+	string date1;
+	string startdate;
+	string enddate;
+	string category1;
 	string category;
 	string remark;
 	cin>>choice;
@@ -76,6 +83,96 @@ int main(){
 			ofs.close(); 
 			cout<<"支出已成功记录！"<<endl;
 			break;
+		case 3 :
+			cout<<"下面为所有收入记录："<<endl;
+			ifs.open("收入记录.txt",ios::in);
+			while(ifs>>date&&ifs>>revenue&&ifs>>category&&ifs>>remark){
+				cout<<date<<" "<<revenue<<" "<<category<<" "<<remark<<endl;
+			}
+			ifs.close();
+			cout<<"----------------------------------"<<endl; 
+			cout<<"下面为所有支出记录："<<endl;
+			ifs.open("支出记录.txt",ios::in);
+			while(ifs>>date&&ifs>>consume&&ifs>>category&&ifs>>remark){
+				cout<<date<<" "<<consume<<" "<<category<<" "<<remark<<endl;
+			}
+			ifs.close(); 
+		    break;
+		case 4 :
+			cout<<"----查询账单功能----"<<endl; 
+			cout<<"1.按指定日期查询"<<endl;
+			cout<<"2.按日期范围查询"<<endl;
+			cout<<"3.按类别查询"<<endl;
+			int choice1;
+			cin>>choice1;
+			switch(choice1){
+			  case 1 :
+				cout<<"请输入指定日期（YYYY-MM-DD）：";
+				cin>>date1;
+				cout<<"下面为所有收入记录："<<endl;
+			    ifs.open("收入记录.txt",ios::in);
+			    while(ifs>>date&&ifs>>revenue&&ifs>>category&&ifs>>remark){
+				    if(date1.compare(date)==0){
+					   cout<<date<<" "<<revenue<<" "<<category<<" "<<remark<<endl;
+				    }
+		    	}
+			    ifs.close();
+			    cout<<"----------------------------------"<<endl; 
+		       	cout<<"下面为所有支出记录："<<endl;
+		    	ifs.open("支出记录.txt",ios::in);
+		    	while(ifs>>date&&ifs>>consume&&ifs>>category&&ifs>>remark){
+			     	if(date1.compare(date)==0){
+					   cout<<date<<" "<<consume<<" "<<category<<" "<<remark<<endl;
+				    }
+		     	}
+		     	ifs.close();
+		     	break;
+		      case 2 :
+		      	cout<<"请输入开始日期（YYYY-MM-DD）：";
+		      	cin>>startdate;
+		      	cout<<"请输入结束日期（YYYY-MM-DD）：";
+		      	cin>>enddate;
+		      	cout<<"下面为所有收入记录："<<endl;
+			    ifs.open("收入记录.txt",ios::in);
+			    while(ifs>>date&&ifs>>revenue&&ifs>>category&&ifs>>remark){
+				    if(date>=startdate && date<=enddate){
+					   cout<<date<<" "<<revenue<<" "<<category<<" "<<remark<<endl;
+				    }
+		    	}
+			    ifs.close();
+			    cout<<"----------------------------------"<<endl; 
+		       	cout<<"下面为所有支出记录："<<endl;
+		    	ifs.open("支出记录.txt",ios::in);
+		    	while(ifs>>date&&ifs>>consume&&ifs>>category&&ifs>>remark){
+			     	if(date>=startdate && date<=enddate){
+					   cout<<date<<" "<<consume<<" "<<category<<" "<<remark<<endl;
+				    }
+		     	}
+		     	ifs.close();
+		      	break;
+		      case 3 :
+		      	cout<<"请输入类别进行查询：";
+		      	cin>>category1;
+				cout<<"下面为所有收入记录："<<endl;
+			    ifs.open("收入记录.txt",ios::in);
+			    while(ifs>>date&&ifs>>revenue&&ifs>>category&&ifs>>remark){
+				    if(category.compare(category1)==0){
+					   cout<<date<<" "<<revenue<<" "<<category<<" "<<remark<<endl;
+				    }
+		    	}
+			    ifs.close();
+			    cout<<"----------------------------------"<<endl; 
+		       	cout<<"下面为所有支出记录："<<endl;
+		    	ifs.open("支出记录.txt",ios::in);
+		    	while(ifs>>date&&ifs>>consume&&ifs>>category&&ifs>>remark){
+			     	if(category.compare(category1)==0){
+					   cout<<date<<" "<<consume<<" "<<category<<" "<<remark<<endl;
+				    }
+		     	}
+		     	ifs.close();
+		      	break;
+			}
+		    break; 
 		case 7 : 
 		    cout<<"已安全退出！"<<endl;
 		    exit(0); 
