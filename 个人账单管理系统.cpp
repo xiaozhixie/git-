@@ -11,6 +11,8 @@ void menu(){
         cout<<"2. 记录支出"<<endl;
         cout<<"3. 查看所有账单"<<endl;
         cout<<"4. 查询账单"<<endl;
+        cout<<"5.预算管理"<<endl;
+		cout<<"6.月度统计"<<endl; 
         cout<<"7. 退出系统"<<endl;
         cout<<"请输入选择序号："; 
 	}
@@ -22,13 +24,21 @@ int main(){
 	int choice;
 	double revenue;
 	double consume;
+	double allRevenue=0;
+	double allConsume=0;
+	double cateMoney1=0;
+	double cateMoney2=0; 
 	string date;
 	string date1;
 	string startdate;
 	string enddate;
 	string category1;
 	string category;
+	string category2;
 	string remark;
+	int monthLimit;
+	string month;
+	string year; 
 	cin>>choice;
 	switch(choice){
 		case 1 : 
@@ -173,6 +183,50 @@ int main(){
 		      	break;
 			}
 		    break; 
+		case 5 :
+			cout<<"请设置每个月支出的预算限额：";
+			cin>>monthLimit;
+			ifs.open("支出记录.txt",ios::in);
+			cout<<"请输入查询的月份(01-12)：";      //必须为 01 02 03... 
+			cin>>month;
+			while(ifs>>date&&ifs>>consume&&ifs>>category&&ifs>>remark){
+				if(date.substr(5,2)==month){
+					monthLimit-=consume;
+				}
+			}
+			ifs.close();
+			cout<<month<<"月的剩余预算:"<<monthLimit<<endl;
+			break;
+		case 6 :
+			ifs.open("收入记录.txt",ios::in);
+			cout<<"请输入要查询的年份：";
+			cin>>year;
+			cout<<"请输入要查询的类别：";
+			cin>>category2; 
+			while(ifs>>date&&ifs>>revenue&&ifs>>category&&ifs>>remark){
+				    if(date.substr(0,4)==year){
+				       if(category.compare(category2)==0){
+				       	cateMoney1+=revenue;
+					   }
+					   allRevenue+=revenue;
+				    }
+		    	}
+		    cout<<year<<"年的总收入为："<<allRevenue<<endl;
+			    ifs.close();
+			ifs.open("支出记录.txt",ios::in); 
+			while(ifs>>date&&ifs>>consume&&ifs>>category&&ifs>>remark){
+				    if(date.substr(0,4)==year){
+				    	if(category.compare(category2)==0){
+				       	cateMoney2+=consume;
+					   }
+					   allConsume+=consume;
+				    }
+		    	}
+		    cout<<year<<"年的总支出为："<<allConsume<<endl;
+		    cout<<category2<<"的收入金额为："<<cateMoney1<<endl;
+		     cout<<category2<<"的支出金额为："<<cateMoney2<<endl;
+			    ifs.close();
+			break;
 		case 7 : 
 		    cout<<"已安全退出！"<<endl;
 		    exit(0); 
